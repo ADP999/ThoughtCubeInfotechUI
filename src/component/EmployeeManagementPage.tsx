@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react"
 import { getEmployee, saveEmployee } from "../Services/ApiServices";
+import { Link } from "react-router-dom";
 
 function EmployeeManagementPage() {
 
@@ -17,7 +18,6 @@ function EmployeeManagementPage() {
         };
 
         fetchEmployees();
-
 
     }
 
@@ -49,9 +49,11 @@ function EmployeeManagementPage() {
                             <li className="nav-item">
                                 <a className="nav-link active" aria-current="page" href="add-employee-management.html">Add Employee</a>
                             </li>
-                            <li className="nav-item">
-                                <a className="nav-link active" aria-current="page" href="monthly-report.html">Employee Monthly Reports</a>
-                            </li>
+                            <Link to="/MonthlyReport">
+                                <li className="nav-item">
+                                    <a className="nav-link active" aria-current="page">Employee Monthly Reports</a>
+                                </li>
+                            </Link>
                             <li className="nav-item">
                                 <a className="nav-link active" aria-current="page" href="#">Time Tracker</a>
                             </li>
