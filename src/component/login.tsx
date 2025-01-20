@@ -1,14 +1,16 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { LoginApi } from '../Services/ApiServices';
 
 function Login() {
 
-    const [login,setLogin] = useState({login : '',password:''})
-    let history : any = useNavigate();
+    const [login,setLogin] = useState({username : '',password:''})
+    let navigate : any = useNavigate();
 
     function LoginSubmit()
     {
-        history("/EmployeeManagement")
+        //history("/EmployeeManagement")
+        LoginApi(login,navigate)
     }
 
     return (
@@ -17,7 +19,7 @@ function Login() {
                 <form action="#">
                     <h2>Login</h2>
                     <div className="input-field">
-                        <input type="text"  onChange={(e)=>setLogin({...login,login : e.target.value})}/>
+                        <input type="text"  onChange={(e)=>setLogin({...login,username : e.target.value})}/>
                             <label>Enter your email</label>
                     </div>
                     <div className="input-field">
