@@ -4,26 +4,27 @@ import { Link } from "react-router-dom";
 
 function EmployeeManagementPage() {
 
-    const [employeeDetails, setAddEmployee] = useState({ name: '', email: '', phone: '', status: '' })
-    const [employeeData, setEmployeeData] = useState([] as any)
+    const [employeeDetails, setAddEmployee] = useState({ name: '', email: '', phone: '', status: '' });
+    const [employeeData, setEmployeeData] = useState([] as any);
+    const [reload, setReload] = useState('');
+    const [addEmployee, setAddEmployeee] = useState(false);
+
     const saveEmployeeData = () => {
         saveEmployee(employeeDetails);
         const fetchEmployees = async () => {
             try {
                 const data = await getEmployee();
                 setEmployeeData(data);
+                setReload(data)
             } catch (error) {
                 console.error('Error fetching employees:', error);
             }
         };
-
         fetchEmployees();
-
     }
 
 
     useEffect(() => {
-        debugger
         const fetchEmployees = async () => {
             try {
                 const data = await getEmployee();
@@ -32,9 +33,9 @@ function EmployeeManagementPage() {
                 console.error('Error fetching employees:', error);
             }
         };
-
         fetchEmployees();
-    }, [])
+        setAddEmployee({ name: '', email: '', phone: '', status: '' })
+    }, [reload])
 
     return (
         <div className="col-12">
@@ -47,7 +48,7 @@ function EmployeeManagementPage() {
                     <div className="collapse navbar-collapse" id="navbarSupportedContent">
                         <ul className="navbar-nav me-auto mb-2 mb-lg-0">
                             <li className="nav-item">
-                                <a className="nav-link active" aria-current="page" href="add-employee-management.html">Add Employee</a>
+                                <a className="nav-link active" aria-current="page" onClick={() => setAddEmployeee(!addEmployee)}>Add Employee</a>
                             </li>
                             <Link to="/MonthlyReport">
                                 <li className="nav-item">
@@ -65,34 +66,39 @@ function EmployeeManagementPage() {
                     </div>
                 </div>
             </nav>
-            <div className="col-12 mt-4">
-                <h4 className="text-white heading">Add Employee Management</h4>
-            </div>
-            <div className="col-12 row m-0 mt-3">
-                <div className="col-3">
-                    <label className="text-white mb-2">Employee Name</label>
-                    <input type="text" className="form-control" placeholder="Enter Emp name" value={employeeDetails.name} onChange={(e) => setAddEmployee({ ...employeeDetails, name: e.target.value })} />
-                </div>
-                <div className="col-3">
-                    <label className="text-white mb-2">Email ID</label>
-                    <input type="email" className="form-control" placeholder="Enter Email ID" value={employeeDetails.email} onChange={(e) => setAddEmployee({ ...employeeDetails, email: e.target.value })} />
-                </div>
-                <div className="col-2">
-                    <label className="text-white mb-2">Phone</label>
-                    <input type="text" className="form-control" placeholder="Enter Phone" value={employeeDetails.phone} onChange={(e) => setAddEmployee({ ...employeeDetails, phone: e.target.value })} />
-                </div>
-                <div className="col-3">
-                    <label className="text-white mb-2">Status</label>
-                    <select className="form-control" value={employeeDetails.status} onChange={(e) => setAddEmployee({ ...employeeDetails, status: e.target.value })}>
-                        <option>Select</option>
-                        <option value="1">Active</option>
-                        <option value="0">In Active</option>
-                    </select>
-                </div>
-                <div className="col-1 p-0 mt-auto">
-                    <button type="button" className="btn" onClick={saveEmployeeData}>Submit</button>
-                </div>
-            </div>
+            {
+                addEmployee && <>
+                    <div className="col-12 mt-4">
+                        <h4 className="text-white heading">Add Employee Management</h4>
+                    </div>
+                    <div className="col-12 row m-0 mt-3">
+                        <div className="col-3">
+                            <label className="text-white mb-2">Employee Name</label>
+                            <input type="text" className="form-control" placeholder="Enter Emp name" required value={employeeDetails.name} onChange={(e) => setAddEmployee({ ...employeeDetails, name: e.target.value })} />
+                        </div>
+                        <div className="col-3">
+                            <label className="text-white mb-2">Email ID</label>
+                            <input type="email" className="form-control" placeholder="Enter Email ID" required value={employeeDetails.email} onChange={(e) => setAddEmployee({ ...employeeDetails, email: e.target.value })} />
+                        </div>
+                        <div className="col-2">
+                            <label className="text-white mb-2">Phone</label>
+                            <input type="text" className="form-control" placeholder="Enter Phone" required value={employeeDetails.phone} onChange={(e) => setAddEmployee({ ...employeeDetails, phone: e.target.value })} />
+                        </div>
+                        <div className="col-3">
+                            <label className="text-white mb-2" >Status</label>
+                            <select className="form-control" value={employeeDetails.status} onChange={(e) => setAddEmployee({ ...employeeDetails, status: e.target.value })}>
+                                <option>Select</option>
+                                <option value="Active">Active</option>
+                                <option value="In Active">In Active</option>
+                            </select>
+                        </div>
+                        <div className="col-1 p-0 mt-auto">
+                            <button type="button" className="btn" onClick={saveEmployeeData}>Submit</button>
+                        </div>
+                    </div>
+                </>
+            }
+
             <div className="col-12 mt-4 p-3">
                 <table className="w-100">
                     {employeeData.map(() => {
@@ -117,41 +123,6 @@ function EmployeeManagementPage() {
                             </tr>
                         </>
                     })}
-                    {/* <tr>
-                        <td>Krishnankak</td>
-                        <td>Krishnankak@thoughtcubeit.com</td>
-                        <td>+91 8846959566</td>
-                        <td>Active</td>
-                        <td className="text-center"><span><i className="fa-solid fa-pencil"></i></span></td>
-                    </tr>
-                    <tr>
-                        <td>Krishnankak</td>
-                        <td>Krishnankak@thoughtcubeit.com</td>
-                        <td>+91 8846959566</td>
-                        <td>Active</td>
-                        <td className="text-center"><span><i className="fa-solid fa-pencil"></i></span></td>
-                    </tr>
-                    <tr>
-                        <td>Krishnankak</td>
-                        <td>Krishnankak@thoughtcubeit.com</td>
-                        <td>+91 8846959566</td>
-                        <td>Active</td>
-                        <td className="text-center"><span><i className="fa-solid fa-pencil"></i></span></td>
-                    </tr>
-                    <tr>
-                        <td>Krishnankak</td>
-                        <td>Krishnankak@thoughtcubeit.com</td>
-                        <td>+91 8846959566</td>
-                        <td>Active</td>
-                        <td className="text-center"><span><i className="fa-solid fa-pencil"></i></span></td>
-                    </tr>
-                    <tr>
-                        <td>Krishnankak</td>
-                        <td>Krishnankak@thoughtcubeit.com</td>
-                        <td>+91 8846959566</td>
-                        <td>Active</td>
-                        <td className="text-center"><span><i className="fa-solid fa-pencil"></i></span></td>
-                    </tr> */}
                 </table>
             </div>
         </div>

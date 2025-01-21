@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react"
 import { getEmployee, getEmployeeTimeInTimeOut } from "../Services/ApiServices"
 import moment from "moment-timezone";
+import { Link } from "react-router-dom";
 
 function EmployeeMonthlyReport() {
     const [EmployeeTimeInTimeOut, setEmployeeTimeInTimeOut] = useState([] as any);
@@ -42,9 +43,11 @@ function EmployeeMonthlyReport() {
                     </button>
                     <div className="collapse navbar-collapse" id="navbarSupportedContent">
                         <ul className="navbar-nav me-auto mb-2 mb-lg-0">
+                            <Link to="/EmployeeManagement">
                             <li className="nav-item">
                                 <a className="nav-link active" aria-current="page" href="add-employee-management.html">Add Employee</a>
                             </li>
+                            </Link>
                             <li className="nav-item">
                                 <a className="nav-link active" aria-current="page" href="monthly-report.html">Employee Monthly Reports</a>
                             </li>
