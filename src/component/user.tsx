@@ -1,10 +1,32 @@
 import { useEffect, useRef, useState } from "react";
+import { getEmployee, saveTimeIn, saveTimeOut } from "../Services/ApiServices";
 
-function EmployeeMonthlyData() {
+function UserLogin() {
 
     const videoRef = useRef<any>(null);
     const canvasRef = useRef(null);
     const [photo, setPhoto] = useState(null);
+    let date = new Date()
+    let converetedtime = new Date(date.getTime())
+    const [time, setTime] = useState(new Date());
+    const [employeeName,setEmployeeName] = useState([] as any)
+    const [selectedEmployeeName,setSelectedEmployeeName] = useState('');
+
+    useEffect(() => {
+        const timer = setInterval(() => {
+            setTime(new Date());
+        }, 1000);
+
+        return () => clearInterval(timer);
+    }, []);
+
+    useEffect(()=>{
+        const getEmployees = async() =>{
+            const data = await getEmployee()
+            setEmployeeName(data)
+        }
+       getEmployees()
+    },[])
 
     useEffect(() => {
         const getCameraFeed = async () => {
@@ -52,6 +74,25 @@ function EmployeeMonthlyData() {
         }
     };
 
+    const TimeIn = () => {
+        debugger
+        let timein = {
+            timein :   date.toLocaleTimeString() + " " + date.toLocaleDateString(),
+            employeename : selectedEmployeeName.split(" ")[0],
+            EmpID : parseInt(selectedEmployeeName.split(" ")[1])
+        }
+        saveTimeIn(timein)
+    }
+
+    const TimeOut = () => {
+        let timeout = {
+            timeout :   date.toLocaleTimeString() + " " + date.toLocaleDateString(),
+            EmpID : parseInt(selectedEmployeeName.split(" ")[1])
+        }
+        saveTimeOut(timeout)
+
+    }
+
 
     return <>
         <div className="col-10 m-auto">
@@ -59,8 +100,13 @@ function EmployeeMonthlyData() {
                 <h4 className="text-white heading mb-3">Time In</h4>
             </div>
             <div className="col-6">
-                <select className="form-control">
+                <select className="form-control" onChange={(e)=>setSelectedEmployeeName(e.target.value)}>
                     <option>Select Employee Name</option>
+                    {
+                        employeeName.map((e : any)=>{
+                            return (<option value={e.name +" "+e.id} >{e.name}</option>)
+                        })
+                    }
                 </select>
             </div>
             <div className="col-12 row m-0 mt-3">
@@ -75,27 +121,28 @@ function EmployeeMonthlyData() {
                     </div>
                     <div className="col-12 p-0 mt-3">
                         <button type="button" className="btn-capture" onClick={capturePhoto}>Capture</button>
-                        <button type="button" className="btn-capture">Time in</button>
-                        <button type="button" className="btn-capture">Time out</button>
+                        <button type="button" className="btn-capture" onClick={TimeIn}>Time in</button>
+                        <button type="button" className="btn-capture" onClick={TimeOut}>Time out</button>
                     </div>
                 </div>
                 <div className="col-6">
                     <div className="img-capture">
+                        <canvas ref={canvasRef} style={{ display: "none" }} />
                         {photo && (
                             <div>
                                 <h2>Captured Photo</h2>
                                 <img
                                     src={photo}
                                     alt="Captured"
-                                    />
+                                />
                             </div>
                         )}
                     </div>
-                    <label className="text-white mt-2 col-12">11:00 AM</label>
+                    <label className="text-white mt-2 col-12">{date.toLocaleTimeString() + " " + date.toLocaleDateString()}</label>
                 </div>
             </div>
         </div>
     </>
 
 }
-export default EmployeeMonthlyData
+export default UserLogin

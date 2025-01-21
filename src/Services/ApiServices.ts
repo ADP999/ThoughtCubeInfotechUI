@@ -44,3 +44,46 @@ export const getEmployee = async () =>{
     }
 
 }
+
+export const saveTimeIn = (data : any) =>{
+
+   const response  : any =  axios.post(`${apiUrl}/employees/time-in`, data);
+
+   if(response)
+   {
+    alert("Saved Time In Succesfully")
+   }
+   else
+   {
+    alert("Error Occurred. Please Try Again")
+   }
+
+}
+
+export const saveTimeOut = (data : any) =>{
+
+    const response  : any =  axios.post(`${apiUrl}/employees/time-out`, data);
+ 
+    if(response)
+    {
+     alert("Saved Time Out Succesfully")
+    }
+    else
+    {
+     alert("Error Occurred. Please Try Again")
+    }
+ 
+ }
+
+ export const getEmployeeTimeInTimeOut = async () =>{
+    const response : any = await axios.get(`${apiUrl}/GetEmployeesTimeInTimeOut`).then((resp : any) => {return resp.data});
+    if(response)
+    {
+        console.log(response,'----------------')
+        return response
+    }
+    else
+    {
+        alert("Error Occurred")
+    }
+ }

@@ -3,6 +3,8 @@ import { BrowserRouter as Router, Routes, Route, RouterProvider } from "react-ro
 import EmployeeManagementPage from './component/EmployeeManagementPage';
 import Login from './component/login';
 import EmployeeMonthlyData from './component/user';
+import EmployeeMonthlyReport from './component/EmployeeMonthlyReport';
+import UserLogin from './component/user';
 
 
 function Main() {
@@ -12,7 +14,8 @@ function Main() {
                 <Routes>
                     <Route path='/Login' element={<Login/>} />
                     <Route path='/EmployeeManagement' element={<EmployeeManagementPage />} />
-                    <Route path='/MonthlyReport' element={<EmployeeMonthlyData/>} />
+                    <Route path='/MonthlyReport' element={<EmployeeMonthlyReport/>} />
+                    <Route path='/userLogin' element={<UserLogin/>} />
                 </Routes>
             </Router>
     )
