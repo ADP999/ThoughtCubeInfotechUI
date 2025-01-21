@@ -197,11 +197,23 @@ th, td {
 }
 .img-capture {
   background: transparent;
-  height: 68vh;
+  height: 63vh;
   border: 1px solid #fff;
   border-radius: 10px;
+}
+.img-capture video {
+  border-radius: 8px;
+  width: 100%;
+  height: 100%;
+}
+.color-white{
+  color: #FFF;
+}
+.br-8{
+  border-radius: 8px;
 }
 .btn-capture {
   margin-bottom: 1rem;
   border-radius: 15px;
+  margin-right: 5px;
 }

@@ -79,7 +79,8 @@ function UserLogin() {
         let timein = {
             timein :   date.toLocaleTimeString() + " " + date.toLocaleDateString(),
             employeename : selectedEmployeeName.split(" ")[0],
-            EmpID : parseInt(selectedEmployeeName.split(" ")[1])
+            EmpID : parseInt(selectedEmployeeName.split(" ")[1]),
+            Image : photo
         }
         saveTimeIn(timein)
     }
@@ -87,7 +88,8 @@ function UserLogin() {
     const TimeOut = () => {
         let timeout = {
             timeout :   date.toLocaleTimeString() + " " + date.toLocaleDateString(),
-            EmpID : parseInt(selectedEmployeeName.split(" ")[1])
+            EmpID : parseInt(selectedEmployeeName.split(" ")[1]),
+            image : photo
         }
         saveTimeOut(timeout)
 
@@ -111,6 +113,7 @@ function UserLogin() {
             </div>
             <div className="col-12 row m-0 mt-3">
                 <div className="col-6 p-0">
+                <h3 style={{visibility:"hidden"}}>Captured Photo</h3>
                     <div className="img-capture">
                         <video
                             ref={videoRef}
@@ -126,12 +129,13 @@ function UserLogin() {
                     </div>
                 </div>
                 <div className="col-6">
+                <h3 className="color-white">Captured Photo</h3>
                     <div className="img-capture">
                         <canvas ref={canvasRef} style={{ display: "none" }} />
                         {photo && (
-                            <div>
-                                <h2>Captured Photo</h2>
-                                <img
+                            <div className="h-100">
+                                
+                                <img className="w-100 h-100 br-8"
                                     src={photo}
                                     alt="Captured"
                                 />
