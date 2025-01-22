@@ -83,7 +83,7 @@ function UserLogin() {
     };
 
     const TimeIn = () => {
-        if (selectedEmployeeName === '' && selectedEmployeeName === null) {
+        if (selectedEmployeeName === '' || selectedEmployeeName === null) {
             alert("Select Employee")
             return
         }
@@ -97,7 +97,7 @@ function UserLogin() {
     }
 
     const TimeOut = () => {
-        if (selectedEmployeeName === '' && selectedEmployeeName === null) {
+        if (selectedEmployeeName === '' || selectedEmployeeName === null) {
             alert("Select Employee")
             return
         }
