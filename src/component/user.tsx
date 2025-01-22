@@ -58,6 +58,10 @@ function UserLogin() {
         };
     }, []);
 
+    useEffect(()=>{
+      console.log(selectedEmployeeName,'---------------------')
+    },[selectedEmployeeName])
+
     const capturePhoto = () => {
         const canvas: any = canvasRef.current;
         const video = videoRef.current;
@@ -75,29 +79,31 @@ function UserLogin() {
     };
 
     const TimeIn = () => {
-        debugger
         let timein = {
             timein :   date.toLocaleTimeString() + " " + date.toLocaleDateString(),
-            employeename : selectedEmployeeName.split(" ")[0],
-            EmpID : parseInt(selectedEmployeeName.split(" ")[1]),
+            employeename : selectedEmployeeName.split("$")[0],
+            EmpID : parseInt(selectedEmployeeName.split("$")[1]),
             Image : photo
         }
         saveTimeIn(timein)
     }
 
     const TimeOut = () => {
+        debugger
         let timeout = {
             timeout :   date.toLocaleTimeString() + " " + date.toLocaleDateString(),
-            EmpID : parseInt(selectedEmployeeName.split(" ")[1]),
+            EmpID : parseInt(selectedEmployeeName.split("$")[1]),
             image : photo
         }
         saveTimeOut(timeout)
-
     }
 
 
     return <>
         <div className="col-10 m-auto">
+            <div className="col-12">
+                <img src="../Images/t3-logo.png" />
+            </div>
             <div className="col-12 mt-4">
                 <h4 className="text-white heading mb-3">Time In</h4>
             </div>
@@ -106,7 +112,7 @@ function UserLogin() {
                     <option>Select Employee Name</option>
                     {
                         employeeName.map((e : any)=>{
-                            return (<option value={e.name +" "+e.id} >{e.name}</option>)
+                            return (<option value={e.name +"$"+e.id} >{e.name}</option>)
                         })
                     }
                 </select>
