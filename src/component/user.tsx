@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { getEmployee, saveTimeIn, saveTimeOut } from "../Services/ApiServices";
+import { Navigate, useNavigate } from "react-router-dom";
 
 function UserLogin() {
 
@@ -11,6 +12,8 @@ function UserLogin() {
     const [time, setTime] = useState(new Date());
     const [employeeName,setEmployeeName] = useState([] as any)
     const [selectedEmployeeName,setSelectedEmployeeName] = useState('');
+    const [disable,setDisable] = useState(false)
+    const navigate = useNavigate();
 
     useEffect(() => {
         const timer = setInterval(() => {
@@ -76,6 +79,7 @@ function UserLogin() {
             const imageData = canvas.toDataURL("image/png");
             setPhoto(imageData);
         }
+        setDisable(true)
     };
 
     const TimeIn = () => {
@@ -89,13 +93,17 @@ function UserLogin() {
     }
 
     const TimeOut = () => {
-        debugger
         let timeout = {
             timeout :   date.toLocaleTimeString() + " " + date.toLocaleDateString(),
             EmpID : parseInt(selectedEmployeeName.split("$")[1]),
             image : photo
         }
         saveTimeOut(timeout)
+    }
+
+    const refresh = () =>{
+        //navigate("/userLogin")
+        window.location.reload();
     }
 
 
@@ -130,8 +138,9 @@ function UserLogin() {
                     </div>
                     <div className="col-12 p-0 mt-3">
                         <button type="button" className="btn-capture" onClick={capturePhoto}>Capture</button>
-                        <button type="button" className="btn-capture" onClick={TimeIn}>Time in</button>
-                        <button type="button" className="btn-capture" onClick={TimeOut}>Time out</button>
+                        {disable ? <button type="button" className="btn-capture"  onClick={TimeIn}>Time in</button> : ''}
+                        {disable ? <button type="button" className="btn-capture" onClick={TimeOut}>Time out</button> : ''}
+                        <button type="button" className="btn-capture" onClick={refresh} >Refresh</button>
                     </div>
                 </div>
                 <div className="col-6">
