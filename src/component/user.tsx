@@ -120,7 +120,7 @@ function UserLogin() {
     return <>
         <div className="col-10 m-auto">
             <div className="col-12">
-                <img src="../Images/t3-logo.png" />
+            <a className="navbar-brand" href="#"><img src="t3-logo.png" className="logo-width" /></a>
             </div>
             <div className="col-12 mt-4">
                 <h4 className="text-white heading mb-3">Time In</h4>
