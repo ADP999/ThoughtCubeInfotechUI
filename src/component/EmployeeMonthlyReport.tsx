@@ -101,8 +101,8 @@ function EmployeeMonthlyReport() {
                 <table className="w-100">
                     <tr>
                         <th>Employee Name</th>
-                        <th>Month</th>
-                        <th>Year</th>
+                        <th>Day</th>
+                        {/* <th>Year</th> */}
                         <th>Time in</th>
                         <th>Time out</th>
                     </tr>
@@ -110,14 +110,14 @@ function EmployeeMonthlyReport() {
                         debugger
                         
                         const timedate = new Date(e.TimeIn?.split(" ")[2])
-                        const year = e.TimeIn.split("/")[2]
-                        const month = timedate.toLocaleString('en-US', { month: 'long' })
+                        // const year = e.TimeIn.split("/")[2]
+                        // const month = timedate.toLocaleString('en-US', { month: 'long' })
                         return (
                             <>
                                 <tr key={index}>
                                     <td>{e.EmployeeName}</td>
-                                    <td>{month || "N/A"}</td>
-                                    <td>{year || "N/A"}</td>
+                                    <td>{e.TimeIn?.split(" ")[2]}</td>
+                                    {/* <td>{year || "N/A"}</td> */}
                                     <td>{e.TimeIn?.split(" ")[0]}</td>
                                     <td>{e.TimeOut?.split(" ")[0]}</td>
                                 </tr>
