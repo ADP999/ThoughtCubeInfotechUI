@@ -94,6 +94,7 @@ function UserLogin() {
             Image: photo
         }
         saveTimeIn(timein)
+        refresh()
     }
 
     const TimeOut = () => {
@@ -107,6 +108,7 @@ function UserLogin() {
             image: photo
         }
         saveTimeOut(timeout)
+        refresh()
     }
 
     const refresh = () => {
