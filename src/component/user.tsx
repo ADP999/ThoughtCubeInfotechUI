@@ -10,9 +10,9 @@ function UserLogin() {
     let date = new Date()
     let converetedtime = new Date(date.getTime())
     const [time, setTime] = useState(new Date());
-    const [employeeName,setEmployeeName] = useState([] as any)
-    const [selectedEmployeeName,setSelectedEmployeeName] = useState('');
-    const [disable,setDisable] = useState(false)
+    const [employeeName, setEmployeeName] = useState([] as any)
+    const [selectedEmployeeName, setSelectedEmployeeName] = useState('');
+    const [disable, setDisable] = useState(false)
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -23,13 +23,13 @@ function UserLogin() {
         return () => clearInterval(timer);
     }, []);
 
-    useEffect(()=>{
-        const getEmployees = async() =>{
+    useEffect(() => {
+        const getEmployees = async () => {
             const data = await getEmployee()
             setEmployeeName(data)
         }
-       getEmployees()
-    },[])
+        getEmployees()
+    }, [])
 
     useEffect(() => {
         const getCameraFeed = async () => {
@@ -61,9 +61,9 @@ function UserLogin() {
         };
     }, []);
 
-    useEffect(()=>{
-      console.log(selectedEmployeeName,'---------------------')
-    },[selectedEmployeeName])
+    useEffect(() => {
+        console.log(selectedEmployeeName, '---------------------')
+    }, [selectedEmployeeName])
 
     const capturePhoto = () => {
         const canvas: any = canvasRef.current;
@@ -83,25 +83,33 @@ function UserLogin() {
     };
 
     const TimeIn = () => {
+        if (selectedEmployeeName === '' && selectedEmployeeName === null) {
+            alert("Select Employee")
+            return
+        }
         let timein = {
-            timein :   date.toLocaleTimeString() + " " + date.toLocaleDateString(),
-            employeename : selectedEmployeeName.split("$")[0],
-            EmpID : parseInt(selectedEmployeeName.split("$")[1]),
-            Image : photo
+            timein: date.toLocaleTimeString() + " " + date.toLocaleDateString(),
+            employeename: selectedEmployeeName.split("$")[0],
+            EmpID: parseInt(selectedEmployeeName.split("$")[1]),
+            Image: photo
         }
         saveTimeIn(timein)
     }
 
     const TimeOut = () => {
+        if (selectedEmployeeName === '' && selectedEmployeeName === null) {
+            alert("Select Employee")
+            return
+        }
         let timeout = {
-            timeout :   date.toLocaleTimeString() + " " + date.toLocaleDateString(),
-            EmpID : parseInt(selectedEmployeeName.split("$")[1]),
-            image : photo
+            timeout: date.toLocaleTimeString() + " " + date.toLocaleDateString(),
+            EmpID: parseInt(selectedEmployeeName.split("$")[1]),
+            image: photo
         }
         saveTimeOut(timeout)
     }
 
-    const refresh = () =>{
+    const refresh = () => {
         //navigate("/userLogin")
         window.location.reload();
     }
@@ -116,18 +124,18 @@ function UserLogin() {
                 <h4 className="text-white heading mb-3">Time In</h4>
             </div>
             <div className="col-6">
-                <select className="form-control" onChange={(e)=>setSelectedEmployeeName(e.target.value)}>
+                <select className="form-control" onChange={(e) => setSelectedEmployeeName(e.target.value)}>
                     <option>Select Employee Name</option>
                     {
-                        employeeName.map((e : any)=>{
-                            return (<option value={e.name +"$"+e.id} >{e.name}</option>)
+                        employeeName.map((e: any) => {
+                            return (<option value={e.name + "$" + e.id} >{e.name}</option>)
                         })
                     }
                 </select>
             </div>
             <div className="col-12 row m-0 mt-3">
                 <div className="col-6 p-0">
-                <h3 style={{visibility:"hidden"}}>Captured Photo</h3>
+                    <h3 style={{ visibility: "hidden" }}>Captured Photo</h3>
                     <div className="img-capture">
                         <video
                             ref={videoRef}
@@ -138,18 +146,18 @@ function UserLogin() {
                     </div>
                     <div className="col-12 p-0 mt-3">
                         <button type="button" className="btn-capture" onClick={capturePhoto}>Capture</button>
-                        {disable ? <button type="button" className="btn-capture"  onClick={TimeIn}>Time in</button> : ''}
+                        {disable ? <button type="button" className="btn-capture" onClick={TimeIn}>Time in</button> : ''}
                         {disable ? <button type="button" className="btn-capture" onClick={TimeOut}>Time out</button> : ''}
                         <button type="button" className="btn-capture" onClick={refresh} >Refresh</button>
                     </div>
                 </div>
                 <div className="col-6">
-                <h3 className="color-white">Captured Photo</h3>
+                    <h3 className="color-white">Captured Photo</h3>
                     <div className="img-capture">
                         <canvas ref={canvasRef} style={{ display: "none" }} />
                         {photo && (
                             <div className="h-100">
-                                
+
                                 <img className="w-100 h-100 br-8"
                                     src={photo}
                                     alt="Captured"
