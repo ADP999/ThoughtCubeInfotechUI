@@ -9,6 +9,7 @@ export const LoginApi = async (login : any,navigate : any) =>{
     if(response.data === "Login successfull")
     {
         navigate('/EmployeeManagement')
+        sessionStorage.setItem("login","true")
     }
     else
     {
@@ -81,6 +82,18 @@ export const saveTimeOut = (data : any) =>{
     {
         console.log(response,'----------------')
         return response
+    }
+    else
+    {
+        alert("Error Occurred")
+    }
+ }
+
+ export const updateEmployeeDetails = async (data : any) =>{
+    const response : any = await axios.put(`${apiUrl}/update-employees`,data)
+    if(response)
+    {
+       alert("Employee updated successfully")
     }
     else
     {

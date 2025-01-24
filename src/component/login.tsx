@@ -9,7 +9,6 @@ function Login() {
 
     function LoginSubmit()
     {
-        //history("/EmployeeManagement")
         LoginApi(login,navigate)
     }
 

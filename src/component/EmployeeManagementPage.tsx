@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import { getEmployee, saveEmployee } from "../Services/ApiServices";
+import { getEmployee, saveEmployee, updateEmployeeDetails } from "../Services/ApiServices";
 import { Link } from "react-router-dom";
 
 function EmployeeManagementPage() {
@@ -8,19 +8,20 @@ function EmployeeManagementPage() {
     const [employeeData, setEmployeeData] = useState([] as any);
     const [reload, setReload] = useState('');
     const [addEmployee, setAddEmployeee] = useState(false);
+    const [editingEmployee,setEditingEmployee] = useState(false);
+    const [editId,setEditId] = useState(0);
 
     const saveEmployeeData = () => {
-        saveEmployee(employeeDetails);
-        const fetchEmployees = async () => {
-            try {
-                const data = await getEmployee();
-                setEmployeeData(data);
-                setReload(data)
-            } catch (error) {
-                console.error('Error fetching employees:', error);
-            }
-        };
-        fetchEmployees();
+        if(editingEmployee === true)
+        {
+            let ed : any = employeeDetails
+            ed.id = editId
+            updateEmployeeDetails(ed)
+        }  
+        else
+          saveEmployee(employeeDetails);
+        
+         window.location.reload()
     }
 
 
@@ -37,6 +38,20 @@ function EmployeeManagementPage() {
         setAddEmployee({ name: '', email: '', phone: '', status: '' })
     }, [reload])
 
+    const editEmployee = (data : any) =>{
+        setEditId(data.id)
+        setAddEmployee({...employeeDetails,name:data.name,email:data.email,phone:data.phone,status:data.status})
+        setEditingEmployee(true)
+        setAddEmployeee(true)
+    }
+
+    const editAddController = () =>
+    {
+        setAddEmployeee(!addEmployee)
+        setEditingEmployee(false)
+        setAddEmployee({ name: '', email: '', phone: '', status: '' })
+    }
+
     return (
         <div className="col-12">
             <nav className="navbar navbar-expand-lg navbar-light bg-light">
@@ -48,7 +63,7 @@ function EmployeeManagementPage() {
                     <div className="collapse navbar-collapse" id="navbarSupportedContent">
                         <ul className="navbar-nav me-auto mb-2 mb-lg-0">
                             <li className="nav-item">
-                                <a className="nav-link active" aria-current="page" onClick={() => setAddEmployeee(!addEmployee)}>Add Employee</a>
+                                <a className="nav-link active" aria-current="page" onClick={(e) => editAddController()}>Add Employee</a>
                             </li>
                             <Link to="/MonthlyReport">
                                 <li className="nav-item">
@@ -69,7 +84,7 @@ function EmployeeManagementPage() {
             {
                 addEmployee && <>
                     <div className="col-12 mt-4">
-                        <h4 className="text-white heading">Add Employee Management</h4>
+                        <h4 className="text-white heading">{editingEmployee ? "Edit Employee" : "Add Employee Management"}</h4>
                     </div>
                     <div className="col-12 row m-0 mt-3">
                         <div className="col-3">
@@ -119,7 +134,8 @@ function EmployeeManagementPage() {
                                 <td>{data.email}</td>
                                 <td>{data.phone}</td>
                                 <td>{data.status}</td>
-                                <td className="text-center"><span><i className="fa-solid fa-pencil"></i></span></td>
+                                {/* <td className="text-center"><span><i className="fa-solid fa-pencil">Edit</i></span></td> */}
+                                <td className="text-center" onClick={()=>editEmployee(data)}><button>Edit</button></td>
                             </tr>
                         </>
                     })}

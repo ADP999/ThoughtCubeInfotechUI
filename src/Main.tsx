@@ -5,6 +5,16 @@ import Login from './component/login';
 import EmployeeMonthlyData from './component/user';
 import EmployeeMonthlyReport from './component/EmployeeMonthlyReport';
 import UserLogin from './component/user';
+import PrivateRoute from './component/PrivateRoute';
+
+const employeemanagement = lazy(()=>import("./component/EmployeeManagementPage"))
+const employeemonthlyreport = lazy(()=>import("./component/EmployeeMonthlyReport"))
+const userlogin = lazy(()=>import("./component/user"))
+
+
+// window.addEventListener("unload",()=>{
+//     localStorage.clear();
+// })
 
 
 function Main() {
@@ -13,8 +23,8 @@ function Main() {
             <Router>
                 <Routes>
                     <Route path='/Login' element={<Login/>} />
-                    <Route path='/EmployeeManagement' element={<EmployeeManagementPage />} />
-                    <Route path='/MonthlyReport' element={<EmployeeMonthlyReport/>} />
+                    <Route path='/EmployeeManagement' element={<PrivateRoute component={employeemanagement}/>} />
+                    <Route path='/MonthlyReport' element={<PrivateRoute component={employeemonthlyreport}/>} />
                     <Route path='/userLogin' element={<UserLogin/>} />
                 </Routes>
             </Router>
