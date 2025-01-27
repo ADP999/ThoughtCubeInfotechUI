@@ -25,7 +25,7 @@ function Main() {
                     <Route path='/Login' element={<Login/>} />
                     <Route path='/EmployeeManagement' element={<PrivateRoute component={employeemanagement}/>} />
                     <Route path='/MonthlyReport' element={<PrivateRoute component={employeemonthlyreport}/>} />
-                    <Route path='/userLogin' element={<UserLogin/>} />
+                    <Route path='/EmployeeTIMEIN-TIMEOUT' element={<UserLogin/>} />
                 </Routes>
             </Router>
     )

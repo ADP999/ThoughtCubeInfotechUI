@@ -100,3 +100,8 @@ export const saveTimeOut = (data : any) =>{
         alert("Error Occurred")
     }
  }
+
+ export const logout = (navigate : any) =>{
+         navigate("/Login")
+         sessionStorage.clear()
+ }

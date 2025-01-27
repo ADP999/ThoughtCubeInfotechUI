@@ -15,7 +15,7 @@ function Login() {
     return (
         <div className="register">
             <div className="wrapper">
-                <form action="#">
+                <form action={LoginSubmit}>
                     <h2>Login</h2>
                     <div className="input-field">
                         <input type="text"  onChange={(e)=>setLogin({...login,username : e.target.value})}/>
@@ -28,7 +28,7 @@ function Login() {
                      {/* <div className="forget">
                         <a href="#">Forgot password?</a>
                     </div>  */}
-                    <button type="submit" className="btn mt-5" onClick={LoginSubmit}><a >Log In</a></button>
+                    <button type="submit" className="btn mt-5" ><a >Log In</a></button>
                 </form>
             </div>
             </div>

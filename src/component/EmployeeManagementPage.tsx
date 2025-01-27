@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
-import { getEmployee, saveEmployee, updateEmployeeDetails } from "../Services/ApiServices";
-import { Link } from "react-router-dom";
+import { getEmployee, logout, saveEmployee, updateEmployeeDetails } from "../Services/ApiServices";
+import { Link, useNavigate, useNavigation } from "react-router-dom";
 
 function EmployeeManagementPage() {
 
@@ -10,6 +10,7 @@ function EmployeeManagementPage() {
     const [addEmployee, setAddEmployeee] = useState(false);
     const [editingEmployee,setEditingEmployee] = useState(false);
     const [editId,setEditId] = useState(0);
+    let navigate = useNavigate();
 
     const saveEmployeeData = () => {
         if(editingEmployee === true)
@@ -71,7 +72,7 @@ function EmployeeManagementPage() {
                                 </li>
                             </Link>
                             <li className="nav-item">
-                                <a className="nav-link active" aria-current="page" href="#">Time Tracker</a>
+                                <a className="nav-link active" aria-current="page" onClick={(e)=>logout(navigate)}>Logout</a>
                             </li>
                         </ul>
                         {/* <form class="d-flex">
